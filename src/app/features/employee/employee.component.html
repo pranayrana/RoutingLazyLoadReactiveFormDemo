@@ -1,0 +1,72 @@
+<div class="container">
+  <h2>Edit employee</h2>
+  <form class="form-horizontal" [formGroup]="employeeForm">
+    <div class="row" style="margin-bottom: 10px">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="Name" [ngClass]="{'is-invalid':employeeForm.get('Name').dirty && !employeeForm.get('Name').valid}"
+          class="form-control">
+      </div>
+      <div *ngIf="employeeForm.get('Name').dirty && !employeeForm.get('Name').valid">
+        Name is required
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-6">
+        <input type="text" [ngClass]="{'is-invalid':employeeForm.get('Email').dirty && !employeeForm.get('Email').valid}"
+          class="form-control" formControlName="Email">
+      </div>
+      <div *ngIf="employeeForm.get('Email').dirty && !employeeForm.get('Email').valid">
+        Invalid Email
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px">
+      <label class="control-label col-sm-2" for="phone">Phone:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" formControlName="Phone">
+      </div>
+    </div>
+
+    <div formArrayName="Addresses" *ngFor="let address of addressArray.controls;let i = index">
+      <div [formGroupName]='i'>
+        <div class="row" style="margin-bottom: 10px">
+          <label class="control-label col-sm-2" for="phone">Type:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="{{'type' + i}}" formControlName="Type">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <label class="control-label col-sm-2" for="phone">Street:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="{{'street' + i}}" formControlName="Street">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <label class="control-label col-sm-2" for="phone">City:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="{{'city' + i}}" formControlName="City">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+          <label class="control-label col-sm-2" for="phone">PinCode:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="{{'pincode' + i}}" formControlName="PinCode">
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="row mb-2">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" [disabled]="!addressArray.valid" (click)="addAddress()" class="btn btn-default">Add
+          Address</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" [disabled]="!employeeForm.valid" (click)="saveEmployee()" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
